@@ -1,0 +1,11 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Linking Project Dependencies",
+  "steps": [
+    {
+      "file": "package.json",
+      "description": "Every file path entry in `workspaces` is expected to have a `package.json` so Yarn can resolve dependencies.\n\nThis is the authoritative list for Yarn to get its head on straight, so make sure you list everything that it needs to know about.",
+      "line": 5
+    }
+  ]
+}

@@ -1,7 +1,6 @@
 node_modules/
 yarn.lock
 yarn-error.log
-.tours
 
 **/lib
 **/.tsbuildinfo
