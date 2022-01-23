@@ -1,0 +1,33 @@
+{
+    // Instructs the TypeScript compiler how to compile .ts files it finds while building the project.
+    "compilerOptions": {
+        // Specify what module code is generated.
+        "module": "ES6",
+        // ES6 should work in modern browsers. Drop this to ES5 or lower for older browsers.
+        "target": "ES6",
+        // Enable React JSX support by default
+        "jsx": "react",
+        // Specify how TypeScript looks up a file from a given module specifier. ('node' or 'classic')
+        "moduleResolution": "node",
+        "lib": ["dom", "es2017"],
+        // Save .tsbuildinfo files during builds to allow for incremental compilation of projects.
+        "incremental": true,
+        "composite": true,
+        // These 2 work together to enable better import resolution.
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+
+        // Language Features
+        // Disallows imports of '.js' files in the project
+        "allowJs": false,
+
+        // Type Checking
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": false,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "strictNullChecks": false,
+        "skipLibCheck": true
+    },
+}

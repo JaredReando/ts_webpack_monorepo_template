@@ -1,0 +1,12 @@
+{
+  "name": "ui_library",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.21"
+  }
+}

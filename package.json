@@ -1,0 +1,19 @@
+{
+  "name": "ts_webpack_monorepo_template",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": {  
+    "packages": [
+      "./client_app",
+      "./projects/api",
+      "./projects/ui_library"
+    ]
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "start": "tsc --build --watch",
+    "clean": "tsc --build --clean"
+  },
+  "author": "Jared Reando <43949038+JaredReando@users.noreply.github.com>",
+  "license": "MIT"
+}

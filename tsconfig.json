@@ -1,0 +1,10 @@
+{
+    "files": [],
+    "references": {
+        "packages": [
+            {"path": "./client_app"},
+            {"path": "./packages/api"},
+            {"path": "./packages/ui_library"}
+        ]
+    }
+}

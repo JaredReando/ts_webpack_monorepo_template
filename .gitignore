@@ -1,0 +1,16 @@
+node_modules/
+yarn.lock
+yarn-error.log
+.tours
+
+**/lib
+**/.tsbuildinfo
+**/*.tsbuildinfo
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+
+.eslintcache
+
+build/
