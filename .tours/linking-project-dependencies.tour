@@ -1,11 +1,57 @@
 {
   "$schema": "https://aka.ms/codetour-schema",
-  "title": "Linking Project Dependencies",
+  "title": "Set up inter-project dependencies",
   "steps": [
     {
       "file": "package.json",
-      "description": "Every file path entry in `workspaces` is expected to have a `package.json` so Yarn can resolve dependencies.\n\nThis is the authoritative list for Yarn to get its head on straight, so make sure you list everything that it needs to know about.",
-      "line": 5
+      "description": "Every file path entry in `workspaces` is expected to have a `package.json` so Yarn can resolve dependencies.\n\nIf we ran `yarn start` from this top-level directory, each of these projects would also have the command run inside their scope -- effectively starting all of them at the same time, and ensuring the most up-to-date dependencies are installed.\n\nThis is the authoritative list for Yarn to get its head on straight, so make sure you list everything that it needs to know about.",
+      "line": 5,
+      "title": "Add monorepo projects to a workspace"
+    },
+    {
+      "file": "tsconfig.json",
+      "description": "Typescript can be used in conjunction with Yarn workspaces. \n\nBy including interdependent project directory paths here in the `references` array, we are telling Typescript to compile everything at once whenever a `tsc` command is run at this directory level.\n\nWe can also declare nested project dependencies below this directory level -- so that some packages or applications consume only what they are dependent on, rather than every TS project in the whole monorepo.",
+      "line": 3,
+      "title": "Configure Typescript references to match workspace directories"
+    },
+    {
+      "file": "client_app/tsconfig.json",
+      "description": "This application depends on the Typescript output of the `api` and `ui_library` projects. \n\nBy adding them here as dependent references, when `tsc --build` or another `tsc` command is run from the `client_app` directory, these will be updated at the same time, ensuring that `client_app` is consuming the latest versions of its dependencies.\n\nAny Typescript project that consumes another Typescript project can declare these dependcies so it stays up to date -- not just front-facing applications. ",
+      "line": 9,
+      "title": "Link sub-projects to their direct dependencies"
+    },
+    {
+      "file": "packages/ui_library/package.json",
+      "description": "`\"name\"` is what you will use as the module name for project imports elsewhere:\n\n```javascript\n// client_app/src/index.ts\nimport { someExport } from \"@local_packages/ui_library\"\n```\n\n\nIt registers the namespace with Yarn so it is simlinked `node_modules`. Because of this, we don't need to use a filepath to import this project's exported modules.\n\n`\"version\"` is also important -- this needs to match the criteria of the `package.json` that requires this project as a dependency:\n\n```json\n\"dependencies\": {\n    \"@local_packages/ui_library\": \"1.0.0\"\n}\n```\n\nThe `\"main\"` and `\"types\"` fields direct Yarn and Typescript to the location of the Javascript module entry point, as well as any type declaration in order to satisfy TS type checking.\n\nMake sure all of these fields are populated correctly for projects within the monorepo.\n\nErrors here will cause Yarn to not recognize local project module imports, and Typescript will throw type errors if you fail to provide a type declarations source file.",
+      "line": 7,
+      "selection": {
+        "start": {
+          "line": 2,
+          "character": 2
+        },
+        "end": {
+          "line": 7,
+          "character": 31
+        }
+      },
+      "title": "Define project properties to enable Yarn and TS features"
+    },
+    {
+      "file": "tsconfig.base.json",
+      "description": "Both of these properties must be enbaled for Typescript project dependency features to work.\n\nBy setting `\"incremental\": true`, TS saves a build information file that tracks changes between builds. This enables much faster re-builds when a project or one of its dependencies updates -- it only needs to recompile the changes, rather than all of the project files.",
+      "line": 15,
+      "selection": {
+        "start": {
+          "line": 14,
+          "character": 9
+        },
+        "end": {
+          "line": 15,
+          "character": 27
+        }
+      },
+      "title": "Enabled TS compiler options for linked project management"
     }
-  ]
+  ],
+  "description": "Link interdependent pacakges in the same project with Yarn workspaces. This consolidates common npm dependencies into a shared node_modules folder. It also makes sure connected projects' dependencies are up to date -- when one of them is run, all of them are updated according to the workspaces delcarations."
 }

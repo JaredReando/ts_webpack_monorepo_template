@@ -1,0 +1,54 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Set up Webpack",
+  "steps": [
+    {
+      "file": "client_app/package.json",
+      "description": "Webpack for production and development builds requires a handful of base dependencies to get running:\n- `webpack` -- base package\n- `webpack-cli` -- run `webpack` commands directly in the command line. Enables `package.json` project scripts to control webpack builds\n- `webpack-dev-server` -- not required, but so helpful it may as well be. Enables local development with hot-reloading and other features. Builds the project in system memory (different from `prod` disk builds) and listens for file changes to recompile and serve updates\n- `webpack-merge` -- combine webpack `config.js` declarations, allowing base configurations to be shared between `modes`\n\nVarious loaders and plugins are added to `webpack` as needed -- the most common are `html-loader` and `ts-loader` (for TS projects)",
+      "line": 23,
+      "selection": {
+        "start": {
+          "line": 20,
+          "character": 5
+        },
+        "end": {
+          "line": 23,
+          "character": 30
+        }
+      },
+      "title": "Add essential dependencies"
+    },
+    {
+      "file": "client_app/webpack.common.js",
+      "description": "As soon as the `webpack` dependency is added to the project, it will work without any additional configuration.\n\nRunning `yarn webpack` will attempt to find a project entry point, create a dependency tree, and build an output module combining all dependencies. This base functionality matches the functionality of competing build tools like `parcel`, but anything more complicated than vanilla JS files will confuse `webpack` and require further configuration.\n\nWithout additional configuration, `webpack` makes a number of assumptions about your project:\n- project entry point will be found at `project/src/index.js`\n- output directory location is `project/dist`\n- you will manually add `<script>` tags pointing to bundled JS modules in your `HTML` files\n- output will always be a single file called `bundle.js`\n- no file types other than Javscript need to be bundled in the project\n\nIf any of these assumption are *not* true of your project, or to add additional configurations, a configuration file is needed to tell webpack the details of your build process.\n\nIn this base config file (`webpack.common.js`), `webpack` is instructed to look for an entry file called `index.tsx` within the `proejct/src` directory. Using the `html-webpack-plugin`, it will use the `index.html` source file as the template to create a build version of the project's HTML file, with the bundled JS modules auto-inserted into `<script>` tags\n\nFinally, the `\"resolve\"` property tells `webpack` which file extensions should be appended to incomplete import statements in the project. It will try to use each of these suffixes (in the same order as the array) to match existing project files:\n\n```javascript\nimport { functionA } from \"./files/functionA\" //actual file name: functionA.ts -- OK (\".ts\" in the list)\nimport { functionB } from \"./files/functionB\" //actual file name: functionB.tsx -- OK (\".tsx\" in the list)\nimport { functionC } from \"./files/functionC\" //actual file name: functionC.js -- OK (\".js\" in the list)\nimport { functionD } from \"./files/functionD\" //acutal file name: functionD.py -- ERROR! (\"py\" is not a resolvable extension)\n```\n\nWhen it encounters a file that is *not* plain Javascript (such as Typescript), it will expect a module loader to be provided so it can transpile it *into* plain Javascript.",
+      "line": 16,
+      "selection": {
+        "start": {
+          "line": 5,
+          "character": 2
+        },
+        "end": {
+          "line": 16,
+          "character": 4
+        }
+      },
+      "title": "Why use a config file?"
+    },
+    {
+      "file": "client_app/webpack.common.js",
+      "description": "Loaders are the backbone of the `webpack` build process.\n\nWhen a file type other than Javascript is encountered in the project dependency tree, `webpack` needs to know how to handle the conversion of that file type into plain Javascript.\n\nAdding loaders to `module.rules` says to `webpack`, _\"hey, if you encounter a file matching the extension criteria I'm giving you, use the loader I installed to convert that file type.\"_\n\nHere, we are using a RegEx expression to match either a `\".ts\"` or `\".tsx\"` file. If `webpack` finds a file with either of those extensions, it will attempt to use `\"ts-loader\"` to convert Typescript --> Javascript. Any errors will be shown in the CLI if this conversion encounters a problem.\n\nA general rule of thumb with loaders is -- if it's not a `\".js\"` file, you're probably going to need a loader for it.\n\nNOTE: it is often the case that new or experimental features of Javascript need to be polyfilled in the final build in order to work with older browsers. `webpack` is able to handle this conversion on its own, or with the additional help of the `babel-loader` and additional configuration.",
+      "line": 20,
+      "selection": {
+        "start": {
+          "line": 20,
+          "character": 3
+        },
+        "end": {
+          "line": 24,
+          "character": 6
+        }
+      },
+      "title": "Introduction to webpack loaders"
+    }
+  ]
+}

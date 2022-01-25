@@ -20,6 +20,7 @@
         // Language Features
         // Disallows imports of '.js' files in the project
         "allowJs": false,
+        "strict": true,
 
         // Type Checking
         "noImplicitAny": true,

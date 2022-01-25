@@ -1,0 +1,1 @@
+export const PLACE_KITTEN_URL = 'https://placekitten.com/g/';

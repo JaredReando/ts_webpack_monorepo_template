@@ -2,13 +2,15 @@
   "name": "client_app",
   "version": "1.0.0",
   "license": "MIT",
-  "scipts": {
+  "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
   },
   "dependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "@local_package/api": "1.0.0",
+    "@local_package/ui_library": "1.0.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.38",

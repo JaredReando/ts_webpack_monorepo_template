@@ -1,12 +1,15 @@
 {
-  "name": "ui_library",
+  "name": "@local_package/ui_library",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
+  "private": true,
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "dependencies": {
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.21"
+    "@types/styled-components": "^5.1.21",
+    "typescript": "^4.5.5"
   }
 }
